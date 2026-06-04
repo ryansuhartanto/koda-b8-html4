@@ -1,6 +1,6 @@
 # Form Survey Perokok
 
-HTML excercise for implementing Google Form design using pure HTML and CSS.
+DOM manipulation excercise for implementing Google Form design.
 
 ## Screenshot
 
