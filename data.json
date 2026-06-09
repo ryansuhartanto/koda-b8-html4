@@ -1,0 +1,81 @@
+[
+  {
+    "name": "Joni",
+    "age": "23",
+    "gender": "male",
+    "smoking": "1",
+    "brand": ["gudang-garam-filter", "lucky-strike", "marlboro", "esse"]
+  },
+
+  {
+    "name": "Adit",
+    "age": "22",
+    "gender": "male",
+    "smoking": "0",
+    "brand": []
+  },
+
+  {
+    "name": "Andi",
+    "age": "25",
+    "gender": "male",
+    "smoking": "1",
+    "brand": ["lucky-strike", "esse"]
+  },
+
+  {
+    "name": "Siti",
+    "age": "26",
+    "gender": "female",
+    "smoking": "1",
+    "brand": ["esse"]
+  },
+
+  {
+    "name": "Yani",
+    "age": "24",
+    "gender": "female",
+    "smoking": "0",
+    "brand": []
+  },
+
+  {
+    "name": "Nita",
+    "age": "20",
+    "gender": "female",
+    "smoking": "0",
+    "brand": []
+  },
+
+  {
+    "name": "Joko",
+    "age": "32",
+    "gender": "male",
+    "smoking": "1",
+    "brand": ["gudang-garam-filter"]
+  },
+
+  {
+    "name": "Upin",
+    "age": "24",
+    "gender": "male",
+    "smoking": "0",
+    "brand": []
+  },
+
+  {
+    "name": "Hani",
+    "age": "29",
+    "gender": "female",
+    "smoking": "0",
+    "brand": []
+  },
+
+  {
+    "name": "Dani",
+    "age": "31",
+    "gender": "male",
+    "smoking": "1",
+    "brand": ["lucky-strike", "marlboro"]
+  }
+]
