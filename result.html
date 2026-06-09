@@ -130,22 +130,23 @@
 
     $("<h1>", {
       text: "Data Survey Perokok",
+      class: "px-6 py-4 text-heading font-medium"
     }).appendTo($body);
 
-    const $main = $("<main>", {
-
+    const $main = $("<div>", {
+      class: "relative overflow-x-auto bg-neutral-primary-soft shadow-xs rounded-base border border-default"
     }).appendTo($body);
+
     const $table = $("<table>", {
-
+      class: "w-full text-sm text-left rtl:text-right text-body"
     }).appendTo($main);
 
-    const $thead_tr = $("<tr>", {
-
-    }).appendTo(
+    const $thead_tr = $("<tr>").appendTo(
       $("<thead>", {
-
+        class: "text-sm text-body bg-neutral-secondary-soft border-b rounded-base border-default"
       }).appendTo($table),
     );
+
     [
       "#",
       "Nama",
@@ -153,13 +154,13 @@
       "Jenis Kelamin",
       "Perokok",
       "Merek",
-    ].forEach((label) => $("<td>", {
+    ].forEach((label) => $("<th>", {
+      scope: "col",
+      class: "px-6 py-3 font-medium",
       text: label
     }).appendTo($thead_tr));
 
-    const $tbody = $("<tbody>", {
-
-    }).appendTo($table);
+    const $tbody = $("<tbody>").appendTo($table);
 
     const data = JSON.parse(window.localStorage.getItem("data"));
 
@@ -170,7 +171,9 @@
       smoking = "",
       brand = []
     }, i) => {
-      const $tr = $("<tr>");
+      const $tr = $("<tr>", {
+        class: "bg-neutral-primary border-b border-default"
+      });
 
       switch (gender) {
         case "male":
@@ -188,13 +191,25 @@
         brand.split("-").map((brand) => brand.charAt(0).toUpperCase() + brand.slice(1)).join(" ")
       ).join(", ");
 
-      [i + 1, name, age, gender, smoking, brand].forEach((data, i) => $("<td>", {
-        text: data,
-        class: "" // if (i === 0)
-      }).appendTo($tr));
+      [i + 1, name, age, gender, smoking, brand].forEach((data, index) => {
+        if (index === 0) {
+          $("<th>", {
+            scope: "row",
+            class: "px-6 py-4 font-medium text-heading whitespace-nowrap",
+            text: data
+          }).appendTo($tr);
+        } else {
+          $("<td>", {
+            class: "px-6 py-4",
+            text: data
+          }).appendTo($tr);
+        }
+      });
 
       $tr.appendTo($tbody);
     });
+
+    $tbody.find("tr").last().removeClass("border-b border-default");
   </script>
 </body>
 
