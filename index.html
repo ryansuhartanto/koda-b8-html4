@@ -23,9 +23,10 @@
     a {
       color: var(--main);
 
-      margin-block: .5rem;
+      margin-block: 0.5rem;
 
       font-size: small;
+      font-weight: bold;
       text-decoration: none;
 
       &:hover {
@@ -42,6 +43,10 @@
       max-width: 48rem;
       margin-inline: auto;
       padding: 1rem;
+
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
     }
 
     form {
@@ -55,7 +60,7 @@
         border-color: color-mix(in oklch, #000 20%, transparent);
         border-style: solid;
         border-width: 1px;
-        border-radius: .5rem;
+        border-radius: 0.5rem;
 
         &:has(h1) {
           border-start-start-radius: 1rem;
@@ -71,14 +76,14 @@
         flex-direction: column;
         gap: 1.5rem;
 
-        &>:first-child:has(:not(h1)) {
+        &> :first-child:has(:not(h1)) {
           font-size: large;
         }
 
-        &>:not(:first-child) {
+        &> :not(:first-child) {
           display: flex;
           align-items: center;
-          gap: .75rem;
+          gap: 0.75rem;
         }
       }
 
@@ -94,11 +99,13 @@
       font-size: small;
       font-weight: bold;
 
-      padding: .625rem;
+      padding: 0.625rem;
 
       color: var(--main);
       background: none;
       border: none;
+
+      cursor: pointer;
 
       &[type="submit"] {
         padding-inline: 1.5rem;
@@ -108,7 +115,7 @@
         border-color: color-mix(in oklch, #000 20%, transparent);
         border-style: solid;
         border-width: 1px;
-        border-radius: .25rem;
+        border-radius: 0.25rem;
       }
     }
 
@@ -167,8 +174,8 @@
         &:checked::after {
           content: "";
 
-          width: .625rem;
-          height: .625rem;
+          width: 0.625rem;
+          height: 0.625rem;
           border-radius: 100rem;
 
           background-color: var(--main);
@@ -176,7 +183,7 @@
       }
 
       &[type="checkbox"] {
-        border-radius: .25rem;
+        border-radius: 0.25rem;
 
         &:checked {
           color: #fff;
@@ -193,7 +200,7 @@
 
 <body>
   <script>
-    const title = "Form Survey Perokok"
+    const title = "Form Survey Perokok";
     const fields = [
       {
         input: "name",
@@ -310,21 +317,22 @@
         inputs.push(input);
       }
 
-      form.append(wrapElementWithDiv(
-        wrapElementWithDiv(label),
-        ...inputs,
-      ));
+      form.append(wrapElementWithDiv(wrapElementWithDiv(label), ...inputs));
     }
 
     const submitButton = document.createElement("button");
     submitButton.type = "submit";
-    submitButton.textContent = "Simpan"
+    submitButton.textContent = "Simpan";
     const resetButton = document.createElement("button");
     resetButton.type = "reset";
     resetButton.textContent = "Bersihkan form";
 
-    form.append(wrapElementWithDiv(submitButton, resetButton))
-    submitButton
+    form.append(wrapElementWithDiv(submitButton, resetButton));
+
+    const resultButton = document.createElement("a");
+    resultButton.href = "result.html";
+    resultButton.textContent = "Lihat hasil";
+    main.append(wrapElementWithDiv(resultButton));;
   </script>
 </body>
 
