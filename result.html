@@ -114,7 +114,7 @@
       return dataEl;
     }
 
-    function makeRow(i, { name, age, gender, smoking, brand = [] }) {
+    function makeRow(i, { name = "", age = "", gender = "", smoking = "", brand = [] }) {
       const row = document.createElement("tr");
 
       switch (gender) {
