@@ -11,8 +11,7 @@
     "name": "Adit",
     "age": "22",
     "gender": "male",
-    "smoking": "0",
-    "brand": []
+    "smoking": "0"
   },
 
   {
@@ -35,16 +34,14 @@
     "name": "Yani",
     "age": "24",
     "gender": "female",
-    "smoking": "0",
-    "brand": []
+    "smoking": "0"
   },
 
   {
     "name": "Nita",
     "age": "20",
     "gender": "female",
-    "smoking": "0",
-    "brand": []
+    "smoking": "0"
   },
 
   {
@@ -59,16 +56,14 @@
     "name": "Upin",
     "age": "24",
     "gender": "male",
-    "smoking": "0",
-    "brand": []
+    "smoking": "0"
   },
 
   {
     "name": "Hani",
     "age": "29",
     "gender": "female",
-    "smoking": "0",
-    "brand": []
+    "smoking": "0"
   },
 
   {
