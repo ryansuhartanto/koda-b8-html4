@@ -290,102 +290,88 @@
 
     await $.ready;
 
-    const main = document.createElement("main");
-    const form = document.createElement("form");
+    const $main = $("<main/>").appendTo("body");
+    const $form = $("<form/>").appendTo($main);
 
-    document.body.append(main);
-    main.append(form);
-
-    function wrapElementWithDiv(...el) {
-      const div = document.createElement("div");
-      for (const e of el) {
-        div.append(e);
-      }
-      return div;
-    }
-
-    const h1 = document.createElement("h1");
-    h1.textContent = title;
-
-    form.append(wrapElementWithDiv(h1));
+    $("<div/>")
+      .append($("<h1/>", { text: title }))
+      .appendTo($form);
 
     for (const field of fields) {
-      const label = document.createElement("label");
-      label.htmlFor = field.input;
-      label.textContent = field.label;
+      const $field = $("<div/>").appendTo($form);
 
-      const inputs = [];
+      $("<div/>")
+        .append($("<label/>", {
+          for: field.input,
+          text: field.label,
+        }))
+        .appendTo($field);
 
       if (field.choices) {
         for (const choice of field.choices) {
-          const input = document.createElement("input");
-          input.type = field.type;
-          input.name = field.input;
-          input.id = choice.value;
-          input.value = choice.value;
-
-          const label = document.createElement("label");
-          label.htmlFor = choice.value;
-          label.textContent = choice.label;
-
-          inputs.push(wrapElementWithDiv(input, label));
+          const $choiceDiv = $("<div/>")
+            .append(
+              $("<input/>", {
+                type: field.type,
+                name: field.input,
+                id: choice.value,
+                value: choice.value,
+              }),
+              $("<label/>", {
+                for: choice.value,
+                text: choice.label,
+              }),
+            )
+            .appendTo($field);
         }
       } else {
-        const input = document.createElement("input");
-        input.type = field.type;
-        input.name = field.input;
-        input.id = field.input;
-        input.placeholder = "Jawaban Anda";
-
-        inputs.push(input);
+        $("<input/>", {
+          type: field.type,
+          name: field.input,
+          id: field.input,
+          placeholder: "Jawaban Anda",
+        }).appendTo($field);
       }
-
-      form.append(wrapElementWithDiv(wrapElementWithDiv(label), ...inputs));
     }
 
-    const submitButton = document.createElement("button");
-    submitButton.type = "submit";
-    submitButton.textContent = "Simpan";
-    const resetButton = document.createElement("button");
-    resetButton.type = "reset";
-    resetButton.textContent = "Bersihkan form";
+    $("<div/>")
+      .append(
+        $("<button/>", { type: "submit", text: "Simpan" }),
+        $("<button/>", { type: "reset", text: "Bersihkan form" }),
+      )
+      .appendTo($form);
 
-    form.append(wrapElementWithDiv(submitButton, resetButton));
+    $("<div/>")
+      .append(
+        $("<a/>", { href: "result.html", text: "Lihat hasil" }),
+      )
+      .appendTo($main);
 
-    const resultButton = document.createElement("a");
-    resultButton.href = "result.html";
-    resultButton.textContent = "Lihat hasil";
-    main.append(wrapElementWithDiv(resultButton));;
-
-    form.addEventListener("submit", (e) => {
-      function parseFormData(formData) {
-        const obj = {};
-        for (const key of new Set(formData.keys())) {
-          if (key.endsWith('[]')) {
-            obj[key.slice(0, -2)] = formData.getAll(key);
-          } else {
-            obj[key] = formData.get(key);
-          }
-        }
-        return obj;
-      }
-
+    $form.on("submit", (e) => {
       e.preventDefault();
-      const data = parseFormData(new FormData(e.target));
 
-      function appendData(data) {
-        const oldData = window.localStorage.getItem("data");
-        const combinedData = oldData ? JSON.parse(oldData) : [];
-        combinedData.push(data);
-        window.localStorage.setItem("data", JSON.stringify(combinedData))
+      const data = {};
+      const formData = new FormData(e.target);
+
+      for (const key of new Set(formData.keys())) {
+        if (key.endsWith("[]")) {
+          data[key.slice(0, -2)] = formData.getAll(key);
+        } else {
+          data[key] = formData.get(key);
+        }
       }
 
-      appendData(data);
+      const oldData = window.localStorage.getItem("data");
+      const combinedData = oldData ? JSON.parse(oldData) : [];
+      combinedData.push(data);
+      window.localStorage.setItem("data", JSON.stringify(combinedData));
 
-      const h1 = document.createElement("h1");
-      h1.textContent = "Terimakasih telah mengisi form ini.";
-      form.replaceChildren(wrapElementWithDiv(h1), wrapElementWithDiv());
-    })
+      $form.empty().append(
+        $("<div/>").append($("<h1/>", {
+          text: "Terimakasih telah mengisi form ini.",
+        }))
+      );
+    });
   </script>
 </body>
 
