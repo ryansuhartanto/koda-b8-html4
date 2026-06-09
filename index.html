@@ -6,7 +6,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Form Survey Perokok</title>
 
-  <style>
+  <script type="importmap">
+    {
+      "imports": {
+        "jquery": "https://esm.sh/jquery@4",
+        "tailwindcss": "https://esm.sh/@tailwindcss/browser@4.3"
+      }
+    }
+  </script>
+  <script type="module" defer>
+    import "tailwindcss";
+  </script>
+
+  <style type="text/tailwindcss">
+    @theme {
+      --color-main: #7438d2;
+      --color-light: #efebfc;
+    }
+
     body {
       margin: 0;
       width: 100%;
@@ -38,6 +55,8 @@
       margin: 0;
       font-weight: inherit;
     }
+
+    
 
     main {
       max-width: 48rem;
@@ -199,7 +218,9 @@
 </head>
 
 <body>
-  <script>
+  <script type="module">
+    import $ from "jquery";
+
     const title = "Form Survey Perokok";
     const fields = [
       {
@@ -266,6 +287,8 @@
         ],
       },
     ];
+
+    await $.ready;
 
     const main = document.createElement("main");
     const form = document.createElement("form");
