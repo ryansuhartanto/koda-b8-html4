@@ -29,203 +29,22 @@
       --color-main: #7438d2;
       --color-light: #efebfc;
     }
-
-    body {
-      margin: 0;
-      width: 100%;
-      min-height: 100dvh;
-
-      font-family: sans-serif;
-
-      --main: #7438d2;
-      --light: #efebfc;
-
-      background-color: var(--light);
-    }
-
-    a {
-      color: var(--main);
-
-      margin-block: 0.5rem;
-
-      font-size: small;
-      font-weight: bold;
-      text-decoration: none;
-
-      &:hover {
-        text-decoration: underline;
-      }
-    }
-
-    h1 {
-      margin: 0;
-      font-weight: inherit;
-    }
-
-    
-
-    main {
-      max-width: 48rem;
-      margin-inline: auto;
-      padding: 1rem;
-
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
-    }
-
-    form {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-
-      &>div:not(:last-of-type) {
-        padding: 1.5rem;
-        padding-block: 1.75rem;
-        border-color: color-mix(in oklch, #000 20%, transparent);
-        border-style: solid;
-        border-width: 1px;
-        border-radius: 0.5rem;
-
-        &:has(h1) {
-          border-start-start-radius: 1rem;
-          border-start-end-radius: 1rem;
-
-          border-block-start-width: 1rem;
-          border-block-start-color: var(--main);
-        }
-
-        background-color: white;
-
-        display: flex;
-        flex-direction: column;
-        gap: 1.5rem;
-
-        &> :first-child:has(:not(h1)) {
-          font-size: large;
-        }
-
-        &> :not(:first-child) {
-          display: flex;
-          align-items: center;
-          gap: 0.75rem;
-        }
-      }
-
-      &>div:last-of-type {
-        display: flex;
-        justify-content: space-between;
-      }
-    }
-
-    button {
-      width: fit-content;
-
-      font-size: small;
-      font-weight: bold;
-
-      padding: 0.625rem;
-
-      color: var(--main);
-      background: none;
-      border: none;
-
-      cursor: pointer;
-
-      &[type="submit"] {
-        padding-inline: 1.5rem;
-
-        color: #fff;
-        background-color: #7438d2;
-        border-color: color-mix(in oklch, #000 20%, transparent);
-        border-style: solid;
-        border-width: 1px;
-        border-radius: 0.25rem;
-      }
-    }
-
-    input {
-      border: 0;
-
-      &[type="text"],
-      &[type="number"] {
-        padding: 1rem;
-        padding-block: 1.25rem;
-
-        background-color: color-mix(in oklch, #000 2.5%, transparent);
-
-        border-block-end-width: 1px;
-        border-block-end-color: color-mix(in oklch, #000 50%, transparent);
-        border-block-end-style: solid;
-
-        margin-block-end: 1px;
-
-        &:focus {
-          outline: none;
-
-          border-block-end-width: 2px;
-          border-block-end-color: #000;
-
-          margin-block-end: 0;
-        }
-      }
-
-      &[type="radio"],
-      &[type="checkbox"] {
-        margin: 0;
-        vertical-align: middle;
-        appearance: none;
-
-        width: 1.25rem;
-        height: 1.25rem;
-
-        border-color: color-mix(in oklch, #000 20%, transparent);
-        border-style: solid;
-        border-width: 2px;
-
-        &:checked {
-          border-color: var(--main);
-        }
-
-        cursor: pointer;
-
-        display: grid;
-        place-content: center;
-      }
-
-      &[type="radio"] {
-        border-radius: 100rem;
-
-        &:checked::after {
-          content: "";
-
-          width: 0.625rem;
-          height: 0.625rem;
-          border-radius: 100rem;
-
-          background-color: var(--main);
-        }
-      }
-
-      &[type="checkbox"] {
-        border-radius: 0.25rem;
-
-        &:checked {
-          color: #fff;
-          background-color: var(--main);
-
-          &::after {
-            content: "\2713";
-          }
-        }
-      }
-    }
   </style>
 </head>
 
 <body>
   <script type="module">
     import $ from "jquery";
+
+    const twP = {
+      "card-base": "p-6 py-7 border border-black/20 bg-white flex flex-col gap-6",
+      "card-header": "rounded-b-lg rounded-t-2xl border-t-[16px] border-t-main",
+      "card-field": "rounded-lg",
+      "button-base": "w-fit text-sm font-medium p-2.5 cursor-pointer",
+      "btn-submit": "px-6 text-white bg-main border border-black/20 rounded hover:opacity-90 transition-opacity",
+      "btn-reset": "text-main bg-transparent border-none hover:underline",
+      "input-toggle": "w-5 h-5 cursor-pointer accent-main",
+    };
 
     const title = "Form Survey Perokok";
     const fields = [
@@ -296,17 +115,33 @@
 
     await $.ready;
 
-    const $main = $("<main/>").appendTo("body");
-    const $form = $("<form/>").appendTo($main);
+    $("body").addClass("w-full min-h-[100dvh] font-sans bg-light");
 
-    $("<div/>")
-      .append($("<h1/>", { text: title }))
+    const $main = $("<main/>", {
+      class: "max-w-[48rem] mx-auto p-4 flex flex-col gap-6",
+    }).appendTo("body");
+
+    const $form = $("<form/>", {
+      class: "flex flex-col gap-4",
+    }).appendTo($main);
+
+    $("<div/>", {
+      class: `${twP["card-base"]} ${twP["card-header"]}`,
+    })
+      .append($("<h1/>", {
+        text: title,
+        class: "text-3xl"
+      }))
       .appendTo($form);
 
     for (const field of fields) {
-      const $field = $("<div/>").appendTo($form);
+      const $field = $("<div/>", {
+        class: `${twP["card-base"]} ${twP["card-field"]}`,
+      }).appendTo($form);
 
-      $("<div/>")
+      $("<div/>", {
+        class: "text-lg",
+      })
         .append($("<label/>", {
           for: field.input,
           text: field.label,
@@ -315,17 +150,21 @@
 
       if (field.choices) {
         for (const choice of field.choices) {
-          const $choiceDiv = $("<div/>")
+          $("<div/>", {
+            class: "flex items-center gap-3",
+          })
             .append(
               $("<input/>", {
                 type: field.type,
                 name: field.input,
                 id: choice.value,
                 value: choice.value,
+                class: twP["input-toggle"],
               }),
               $("<label/>", {
                 for: choice.value,
                 text: choice.label,
+                class: "cursor-pointer",
               }),
             )
             .appendTo($field);
@@ -336,20 +175,35 @@
           name: field.input,
           id: field.input,
           placeholder: "Jawaban Anda",
+          class: "border-0 p-4 py-5 bg-black/[0.025] border-b border-black/50 mb-[1px] focus:outline-none focus:border-b-2 focus:border-black focus:mb-0",
         }).appendTo($field);
       }
     }
 
-    $("<div/>")
+    $("<div/>", {
+      class: "flex justify-between mt-2",
+    })
       .append(
-        $("<button/>", { type: "submit", text: "Simpan" }),
-        $("<button/>", { type: "reset", text: "Bersihkan form" }),
+        $("<button/>", {
+          type: "submit",
+          text: "Simpan",
+          class: `${twP["button-base"]} ${twP["btn-submit"]}`,
+        }),
+        $("<button/>", {
+          type: "reset",
+          text: "Bersihkan form",
+          class: `${twP["button-base"]} ${twP["btn-reset"]}`,
+        }),
       )
       .appendTo($form);
 
     $("<div/>")
       .append(
-        $("<a/>", { href: "result.html", text: "Lihat hasil" }),
+        $("<a/>", {
+          href: "result.html",
+          text: "Lihat hasil",
+          class: "text-main my-2 text-sm font-medium no-underline hover:underline block",
+        }),
       )
       .appendTo($main);
 
@@ -358,7 +212,6 @@
 
       const data = {};
       const formData = new FormData(e.target);
-
       for (const key of new Set(formData.keys())) {
         if (key.endsWith("[]")) {
           data[key.slice(0, -2)] = formData.getAll(key);
@@ -369,11 +222,14 @@
 
       const oldData = window.localStorage.getItem("data");
       const combinedData = oldData ? JSON.parse(oldData) : [];
+
       combinedData.push(data);
       window.localStorage.setItem("data", JSON.stringify(combinedData));
 
       $form.empty().append(
-        $("<div/>").append($("<h1/>", {
+        $("<div/>", {
+          class: `${twP["card-base"]} ${twP["card-header"]}`,
+        }).append($("<h1/>", {
           text: "Terimakasih telah mengisi form ini.",
         }))
       );
