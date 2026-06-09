@@ -5,10 +5,27 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Data Survey Perokok</title>
+
+  <script type="importmap">
+    {
+      "imports": {
+        "jquery": "https://esm.sh/jquery@4",
+        "tailwindcss": "https://esm.sh/@tailwindcss/browser@4.3"
+      }
+    }
+  </script>
+  <script type="module" defer>
+    import "tailwindcss";
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,slnt,wdth,wght,GRAD,ROND@6..144,-10..0,25..151,1..1000,0..100,0..100&display=swap">
 </head>
 
 <body>
-  <h1>Data Survey Perokok</h1>
+  <!-- <h1>Data Survey Perokok</h1>
 
   <table border="1">
     <thead>
@@ -22,7 +39,7 @@
       </tr>
     </thead>
     <tbody>
-      <!-- <tr>
+      <tr>
         <td>1</td>
         <td>Joni</td>
         <td>23</td>
@@ -101,21 +118,59 @@
         <td>Laki-laki</td>
         <td>Ya</td>
         <td>Lucky Strike, Marlboro</td>
-      </tr> -->
+      </tr>
     </tbody>
-  </table>
+  </table> -->
 
-  <script>
-    const tbody = document.querySelector("tbody");
+  <script type="module">
+    import $ from "jquery";
+    await $.ready;
 
-    function makeRowData(data) {
-      const dataEl = document.createElement("td");
-      dataEl.innerText = data;
-      return dataEl;
-    }
+    const $body = $("body");
 
-    function makeRow(i, { name = "", age = "", gender = "", smoking = "", brand = [] }) {
-      const row = document.createElement("tr");
+    $("<h1>", {
+      text: "Data Survey Perokok",
+    }).appendTo($body);
+
+    const $main = $("<main>", {
+
+    }).appendTo($body);
+    const $table = $("<table>", {
+
+    }).appendTo($main);
+
+    const $thead_tr = $("<tr>", {
+
+    }).appendTo(
+      $("<thead>", {
+
+      }).appendTo($table),
+    );
+    [
+      "#",
+      "Nama",
+      "Umur",
+      "Jenis Kelamin",
+      "Perokok",
+      "Merek",
+    ].forEach((label) => $("<td>", {
+      text: label
+    }).appendTo($thead_tr));
+
+    const $tbody = $("<tbody>", {
+
+    }).appendTo($table);
+
+    const data = JSON.parse(window.localStorage.getItem("data"));
+
+    data.forEach(({
+      name = "",
+      age = "",
+      gender = "",
+      smoking = "",
+      brand = []
+    }, i) => {
+      const $tr = $("<tr>");
 
       switch (gender) {
         case "male":
@@ -133,15 +188,13 @@
         brand.split("-").map((brand) => brand.charAt(0).toUpperCase() + brand.slice(1)).join(" ")
       ).join(", ");
 
-      const allData = [i, name, age, gender, smoking, brand].map((data) => makeRowData(data));
-      row.append(...allData);
-      return row;
-    }
+      [i + 1, name, age, gender, smoking, brand].forEach((data, i) => $("<td>", {
+        text: data,
+        class: "" // if (i === 0)
+      }).appendTo($tr));
 
-    const data = JSON.parse(window.localStorage.getItem("data"));
-
-    const dataEls = data.map((e, i) => makeRow(i + 1, e));
-    tbody.append(...dataEls);
+      $tr.appendTo($tbody);
+    });
   </script>
 </body>
 
