@@ -29,6 +29,11 @@
       --color-main: #7438d2;
       --color-light: #efebfc;
     }
+
+    .field:has([required]) > div:first-child label::after {
+      content: " *";
+      color: #ef4444;
+    }
   </style>
 </head>
 
@@ -52,16 +57,19 @@
         input: "name",
         label: "Siapa nama Anda?",
         type: "text",
+        required: true,
       },
       {
         input: "age",
         label: "Berapa umur Anda?",
         type: "number",
+        required: true,
       },
       {
         input: "gender",
         label: "Apa jenis kelamin Anda?",
         type: "radio",
+        required: true,
         choices: [
           {
             value: "male",
@@ -77,6 +85,7 @@
         input: "smoking",
         label: "Apakah Anda perokok?",
         type: "radio",
+        required: true,
         choices: [
           {
             value: "1",
@@ -136,7 +145,7 @@
 
     for (const field of fields) {
       const $field = $("<div/>", {
-        class: `${twP["card-base"]} ${twP["card-field"]}`,
+        class: `field ${twP["card-base"]} ${twP["card-field"]}`,
       }).appendTo($form);
 
       $("<div/>", {
@@ -160,6 +169,7 @@
                 id: choice.value,
                 value: choice.value,
                 class: twP["input-toggle"],
+                ...(field.required && { required: true }),
               }),
               $("<label/>", {
                 for: choice.value,
@@ -176,6 +186,7 @@
           id: field.input,
           placeholder: "Jawaban Anda",
           class: "border-0 p-4 py-5 bg-black/[0.025] border-b border-black/50 mb-[1px] focus:outline-none focus:border-b-2 focus:border-black focus:mb-0",
+          ...(field.required && { required: true }),
         }).appendTo($field);
       }
     }
